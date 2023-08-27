@@ -40,7 +40,22 @@ class Api extends BaseController
         return $this->response->setJSON($result);
     }
 
-	public function signin(){
+    public function editEmployee(){
+        $user = new Usermodel();
+
+        $id = $this->request->getGet('id');
+		$fname = $this->request->getGet('fullname');
+		$telph = $this->request->getGet('tel');
+		$email = $this->request->getGet('email');
+		$passw = $this->request->getGet('pword');
+
+        $result['message'] = $user->updateUser($id, $fname, $telph, $email, $passw);
+        // return $result;
+        return $this->response->setJSON($result);
+    }
+
+
+    public function signin(){
 		$user = new Usermodel();
 
 

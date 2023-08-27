@@ -267,11 +267,19 @@ class UserModel extends Model
         // if($this->emailExists($e)){
         //     return 'Email Already Exists!';
         // }else{
+            //
+            // $query = "update `users` set 
+            // `full_name` = '".$f."',
+            // `phone` = '".$t."',
+            // `email` = '".$e."',
+            // `pword` = '".password_hash($p, PASSWORD_BCRYPT)."',
+            // `date_added` = '".date('Y-m-d H:i:s')."'
+            // where `user_id` = '".$id."'
+            // ";
             $query = "update `users` set 
             `full_name` = '".$f."',
             `phone` = '".$t."',
             `email` = '".$e."',
-            `pword` = '".password_hash($p, PASSWORD_BCRYPT)."',
             `date_added` = '".date('Y-m-d H:i:s')."'
             where `user_id` = '".$id."'
             ";

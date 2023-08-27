@@ -63,6 +63,7 @@ $routes->add('dashboard/users/edit', 'Users::edit');
 $routes->add('api/listemployee', 'Api::listEmployee');
 $routes->add('api/employee', 'Api::employeeByEmail');
 $routes->add('api/register', 'Api::addEmployee');
+$routes->add('api/updateEmployee', 'Api::editEmployee');
 $routes->add('api/signin', 'Api::signin');
 
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
