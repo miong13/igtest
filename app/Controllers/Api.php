@@ -50,6 +50,18 @@ class Api extends BaseController
 		$passw = $this->request->getGet('pword');
 
         $result['message'] = $user->updateUser($id, $fname, $telph, $email, $passw);
+
+        
+        // return $result;
+        return $this->response->setJSON($result);
+    }
+
+    public function deleteEmployee(){
+        $user = new Usermodel();
+
+        $id = $this->request->getGet('id');
+
+        $result['message'] = $user->deleteUser($id);
         // return $result;
         return $this->response->setJSON($result);
     }
