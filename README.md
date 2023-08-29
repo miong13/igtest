@@ -1,5 +1,5 @@
 
-# Simple CodeIgniter CRUD web app and with API
+# Simple CodeIgniter CRUD web app with API function
 
 ## CREATE Users
 
