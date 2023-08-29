@@ -80,5 +80,16 @@ class Api extends BaseController
         return $this->response->setJSON($result);
 	}
 
+    public function registerWithPhoto(){
+        $user = new Usermodel();
+        
+		$fname = $this->request->getPost('fullname');
+		$photo = $this->request->getPost('photo');
+		$email = $this->request->getPost('email');
+		$passw = $this->request->getPost('pword');
+
+        $result['message'] = $user->addNewUserWPhoto($fname, $photo, $email, $passw);
+        return $this->response->setJSON($result);
+    }
 
 }

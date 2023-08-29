@@ -1,3 +1,28 @@
+
+# Simple CodeIgniter CRUD web app and with API
+
+## CREATE Users
+
+adding data users to database 
+
+
+## READ Users
+
+reading data users to database 
+
+
+## UPDATE Users
+
+updating data users to database 
+
+
+## DELETE Users
+
+deleting data users to database 
+
+
+
+
 # CodeIgniter 4 Application Starter
 
 ## What is CodeIgniter?

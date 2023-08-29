@@ -117,11 +117,13 @@ class UserModel extends Model
             $res['uuid'] = $result->getResult()[0]->user_id;
             $res['ulevel'] = $result->getResult()[0]->ulevel;
             $res['pword'] = $result->getResult()[0]->pword;
+            $full_name = $result->getResult()[0]->full_name;
             if($result->getResult()[0]->is_active == '1'){
                 if(password_verify($passw, $res['pword'])){
                     $session->set('uuid', $res['uuid']);
                     $session->set('ulevel', $res['ulevel']);
-                    $res['result'] = 'logged in';
+                    // $res['result'] = 'logged in';
+                    $res['result'] = $full_name;
                 }else{
                     $res['result'] = 'error';
                 }
@@ -313,4 +315,23 @@ class UserModel extends Model
         $query = $this->db->query($sql);
         return $query->getResult();
     }
+
+    //add new users
+    public function addNewUserWPhoto($f, $t, $e, $p){
+        if($this->emailExists($e)){
+            return 'Email Already Exists!';
+        }else{
+            $query = "insert into `users` set 
+            `full_name` = '".$f."',
+            `email` = '".$e."',
+            `is_active` = '1',
+            `pword` = '".password_hash($p, PASSWORD_BCRYPT)."',
+            `photo` = '".$t."',
+            `date_added` = '".date('Y-m-d H:i:s')."'
+            ";
+            $this->db->query($query);       
+            return 'A new user has been added!';
+        }
+    }
+
 }
