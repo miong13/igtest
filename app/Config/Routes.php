@@ -65,6 +65,7 @@ $routes->add('api/employee', 'Api::employeeByEmail');
 // $routes->add('api/register', 'Api::addEmployee');
 $routes->add('api/addemployee', 'Api::addEmployee');
 $routes->add('api/updateemployee', 'Api::editEmployee');
+$routes->add('api/updateemployeewp', 'Api::editEmployeeWithPhoto');
 $routes->add('api/deleteemployee', 'Api::deleteEmployee');
 $routes->add('api/register', 'Api::registerWithPhoto');
 $routes->add('api/signin', 'Api::signin');

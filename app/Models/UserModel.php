@@ -122,8 +122,8 @@ class UserModel extends Model
                 if(password_verify($passw, $res['pword'])){
                     $session->set('uuid', $res['uuid']);
                     $session->set('ulevel', $res['ulevel']);
-                    // $res['result'] = 'logged in';
-                    $res['result'] = $full_name;
+                    $res['result'] = 'logged in';
+                    // $res['result'] = $full_name;
                 }else{
                     $res['result'] = 'error';
                 }
@@ -332,6 +332,97 @@ class UserModel extends Model
             $this->db->query($query);       
             return 'A new user has been added!';
         }
+    }
+
+    //update users
+    public function updateUserWPhoto($id, $f, $t, $e, $p){
+        $sqlpass = "";
+        if(!empty($p)){
+            $sqlpass = "`pword` = '".password_hash($p, PASSWORD_BCRYPT)."',";
+        }
+        if($this->emailExists($e)){
+            $sql = "select `user_id` from `users` where `email` = '".$e."'";
+            $r = $this->db->query($sql);
+            if($r->resultID->num_rows > 0){
+                $q_id = $r->getResult()[0]->user_id;
+                if($q_id == $id){
+                    $query = "update `users` set 
+                    `full_name` = '".$f."',
+                    `photo` = '".$t."',
+                    `email` = '".$e."',
+                    ".$sqlpass."
+                    `date_added` = '".date('Y-m-d H:i:s')."'
+                    where `user_id` = '".$id."'
+                    ";
+                    $this->db->query($query);       
+                    return 'Record has been updated!';                    
+                }else{
+                    return 'Email Already Exists!';     
+                }
+            }else{
+                $query = "update `users` set 
+                `full_name` = '".$f."',
+                `photo` = '".$t."',
+                `email` = '".$e."',
+                ".$sqlpass."
+                `date_added` = '".date('Y-m-d H:i:s')."'
+                where `user_id` = '".$id."'
+                ";
+                $this->db->query($query);       
+                return 'Record has been updated!';                
+            }
+        //     return 'Email Already Exists!';
+        }else{
+            $query = "update `users` set 
+            `full_name` = '".$f."',
+            `photo` = '".$t."',
+            `email` = '".$e."',
+            ".$sqlpass."
+            `date_added` = '".date('Y-m-d H:i:s')."'
+            where `user_id` = '".$id."'
+            ";
+            $this->db->query($query);       
+            return 'Record has been updated!';
+        }
+    }
+
+    //sign-in API
+    public function sign_in_api($email, $passw){
+        $session = session();
+        $query = 'select * from `users` where `email` = "'.$email.'"';
+        $result = $this->db->query($query);
+        if($result->resultID->num_rows > 0){
+            $result_pword = $result->getResult()[0]->pword;
+            if($result->getResult()[0]->is_active == '1'){
+                if(password_verify($passw, $result_pword)){
+                    // $session->set('uuid', $res['uuid']);
+                    // $session->set('ulevel', $res['ulevel']);
+                    // $res['result'] = 'logged in';
+                    $res['err'] = 'success';
+                    $res['uuid'] = $result->getResult()[0]->user_id;
+                    $res['ulevel'] = $result->getResult()[0]->ulevel;
+                    $res['full_name'] = $result->getResult()[0]->full_name;
+                    $res['photo'] = $result->getResult()[0]->photo;
+                    $res['email'] = $result->getResult()[0]->email;
+                    $res['result'] = $res;
+                    // $res['result'] = $full_name;
+                }else{
+                    $res['err'] = 'error';
+                    $res['result'] = $res;
+                    // $res['result'] = 'error';
+                }
+            }else{
+                // $res['result'] = 'inactive';
+                $res['err'] = 'inactive';
+                $res['result'] = $res;
+            }
+
+        }else{
+            // $res['result'] = 'error';
+            $res['err'] = 'error';
+            $res['result'] = $res;
+        }
+        return $res['result'];
     }
 
 }

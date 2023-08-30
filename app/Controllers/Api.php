@@ -51,7 +51,6 @@ class Api extends BaseController
 
         $result['message'] = $user->updateUser($id, $fname, $telph, $email, $passw);
 
-        
         // return $result;
         return $this->response->setJSON($result);
     }
@@ -74,7 +73,7 @@ class Api extends BaseController
 		$email = $this->request->getGet('email');
 		$passw = $this->request->getGet('pword');
 
-		$result['message'] = $user->sign_in($email, $passw);
+		$result['message'] = $user->sign_in_api($email, $passw);
 		// print_r($result);
 		// return $result;
         return $this->response->setJSON($result);
@@ -89,6 +88,21 @@ class Api extends BaseController
 		$passw = $this->request->getPost('pword');
 
         $result['message'] = $user->addNewUserWPhoto($fname, $photo, $email, $passw);
+        return $this->response->setJSON($result);
+    }
+
+    public function editEmployeeWithPhoto(){
+        $user = new Usermodel();
+
+        $id = $this->request->getPost('id');
+		$fname = $this->request->getPost('fullname');
+		$telph = $this->request->getPost('photo');
+		$email = $this->request->getPost('email');
+		$passw = $this->request->getPost('pword');
+
+        $result['message'] = $user->updateUserWPhoto($id, $fname, $telph, $email, $passw);
+
+        // return $result;
         return $this->response->setJSON($result);
     }
 
