@@ -247,6 +247,9 @@ class UserModel extends Model
 
     //add new users
     public function addNewUser($f, $t, $e, $p){
+        if(empty($e) || !filter_var($e, FILTER_VALIDATE_EMAIL)){
+            return "Error Adding!";
+        }
         if($this->emailExists($e)){
             return 'Email Already Exists!';
         }else{
